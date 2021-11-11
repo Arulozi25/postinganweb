@@ -1,9 +1,9 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegistController;
 use App\Http\Controllers\WelcomeController;
-use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,15 +16,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-// Route::get('/', [LoginController::class, 'login'])->name('login');
+Route::get('/', [WelcomeController::class, 'welcome'])->name('welcome')->middleware('guest');
 
 Route::get('/Register', function () {
     return view('regist');
-});
+})->middleware('guest');
 
 // Route::get('/Register', [RegistController::class, 'regist'])->name('index');
 Route::post('/Register', [RegistController::class, 'store'])->name('regist');
@@ -32,6 +32,10 @@ Route::post('/Register', [RegistController::class, 'store'])->name('regist');
 // Route::post('/', [LoginController::class, 'authenticate'])->name('login');
 
 Route::post('/', [WelcomeController::class, 'authenticate'])->name('welcome');
+
+Route::post('/', [WelcomeController::class, 'logout'])->name('welcome');
+
+Route::get('/', [WelcomeController::class, 'logout'])->name('welcome');
 
 Route::get('/Home', function () {
     $postingan = [
@@ -57,7 +61,7 @@ Route::get('/Home', function () {
     return view('index', [
         "posting" => $postingan
     ]);
-});
+})->middleware('auth');
 
 //hal komen
 Route::get('/Home/{slug}', function($slug){
@@ -90,6 +94,6 @@ foreach($postingan as $komen){
     return view('komen', [
         "komen" => $komentar
     ]);
-});
+})->middleware('auth');
 
 

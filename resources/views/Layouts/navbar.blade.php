@@ -112,7 +112,12 @@
             <li class="nav-item"><a href="#" class="nav-link">Features</a></li>
             <li class="nav-item"><a href="#" class="nav-link">Pricing</a></li>
             <li class="nav-item"><a href="#" class="nav-link">FAQs</a></li>
-            <li class="nav-item"><a href="/" class="nav-link">Logout</a></li>
+            <li class="nav-item">
+                <form action="{{route('welcome')}}" action="POST">
+                    @csrf
+                    <button class="nav-link" type="submit">Logout</button>
+                </form>
+            </li>
           </ul>
         </header>
       </div>
